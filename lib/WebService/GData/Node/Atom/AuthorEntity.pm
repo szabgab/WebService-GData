@@ -9,10 +9,10 @@ our $VERSION = 0.01_02;
 sub __init {
 	my ($this,$params) = @_;
 
-	$this->_entity(new WebService::GData::Node::Atom::Author());
-	$this->{_name}   = new WebService::GData::Node::Atom::Name(
+	$this->_entity(WebService::GData::Node::Atom::Author->new());
+	$this->{_name}   = WebService::GData::Node::Atom::Name->new(
 	   text=>ref $params->{name}? $params->{name}->{'$t'}: $params->{name} );
-	$this->{_uri}    = new WebService::GData::Node::Atom::Uri (
+	$this->{_uri}    = WebService::GData::Node::Atom::Uri->new(
 	   text=>ref $params->{uri} ? $params->{uri}->{'$t'} : $params->{uri}  );
 
 	$this->_entity->child($this->{_name})->child($this->{_uri});

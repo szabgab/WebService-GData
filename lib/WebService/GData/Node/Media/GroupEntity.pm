@@ -21,7 +21,7 @@ my $nodes        = [qw(player title description keywords)];
 sub __init {
 	my ($this,$params) = @_;
 
-	$this->_entity(new WebService::GData::Node::Media::Group());
+	$this->_entity(WebService::GData::Node::Media::Group->new());
     foreach my $node (@$collections){
         $this->{'_'.$node}= $this->__node_factory($node,$params,1);
         $this->_entity->child($this->{'_'.$node});
@@ -37,7 +37,7 @@ sub __node_factory {
     my $class = 'WebService::GData::Node::Media::'."\u$node";
     my $data  = $params->{'media$'.$node};
     if(ref($data) eq 'ARRAY' || $collection) {
-        return new WebService::GData::Collection($data||[],undef,sub { 
+        return WebService::GData::Collection->new($data||[],undef,sub { 
         	my $elm=shift; 
         	$elm= $class->new($elm) if ref $elm ne $class; 
         	return $elm; 

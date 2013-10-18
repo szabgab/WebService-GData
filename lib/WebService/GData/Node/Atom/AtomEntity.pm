@@ -68,7 +68,7 @@ private _init_tags => sub {
 
 private _create_collection => sub {
     my ( $data, $class ) = @_;
-    return new WebService::GData::Collection(
+    return WebService::GData::Collection->new(
         $data, 
         undef,
         sub {

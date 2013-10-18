@@ -127,11 +127,11 @@ WebService::GData::Node::AbstractEntity - Abstract proxy class representing seve
         
         #the entity is the root node used
         
-	    $this->_entity(new WebService::GData::Node::Author());
+	    $this->_entity(WebService::GData::Node::Author->new());
 	    
 	    #and its children:
-	    $this->{_name}   = new WebService::GData::Node::Name($params->{name});
-	    $this->{_uri}    = new WebService::GData::Node::Uri ($params->{uri});
+	    $this->{_name}   = WebService::GData::Node::Name->new($params->{name});
+	    $this->{_uri}    = WebService::GData::Node::Uri->new($params->{uri});
 	    
 	    $this->_entity->child($this->{_name})->child($this->{_uri});
     }
@@ -139,7 +139,7 @@ WebService::GData::Node::AbstractEntity - Abstract proxy class representing seve
     1;
 		
     
-    my $author   = new WebService::GData::Node::AuthorEntity();
+    my $author   = WebService::GData::Node::AuthorEntity->new();
        $author->name('john doe');
        $author->uri('http://youtube.com/johndoe');
     
@@ -152,13 +152,13 @@ I<inherits from L<WebService::GData>>
 This package is an abstract class used as a proxy to represent several nodes in one entity.
 A node containing text node and attributes will require to access the data in such a manner:
 
-   my $name   = new WebService::GData::Node::Name(text=>'john doe');
+   my $name   = WebService::GData::Node::Name->new(text=>'john doe');
       $name->text;
       
 If it does make sense at the node level and in an xml context, it does sound a bit unnatural when using nodes with children:
 
-	    my $author = new WebService::GData::Node::Author();
-	    my $name   = new WebService::GData::Node::Name(text=>'john doe');
+	    my $author = WebService::GData::Node::Author->new();
+	    my $name   = WebService::GData::Node::Name->new(text=>'john doe');
 	    $author->child($name);
 	    
 	    $author->name->text;#john doe
@@ -166,7 +166,7 @@ If it does make sense at the node level and in an xml context, it does sound a b
 In an xml context, attributes vs text node do make sense 
 but less in a object oriented context that abstract the underlying xml structure: 
 
-	    my $author = new WebService::GData::Node::AuthorEntity(name=>'john doe');
+	    my $author = WebService::GData::Node::AuthorEntity->new(name=>'john doe');
 	       $author->name;#john doe
 	       
 This class serves as a proxy to redispatch the call for name to name->text or an attribute and therefore limit the xml node/object entity mismatch.
