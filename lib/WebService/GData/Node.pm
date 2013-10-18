@@ -242,12 +242,12 @@ WebService::GData::Node - Abstract class representing an xml node/tag
 	use WebService::GData::Node::Author();
 	use WebService::GData::Node::Category();
 		
-    my $author   = new WebService::GData::Node::Author();
-    my $name     = new WebService::GData::Node::Name(text=>'john doe');
-    my $category = new WebService::GData::Node::Category(scheme=>'author','yt:term'=>'Author');
+    my $author   = WebService::GData::Node::Author->new();
+    my $name     = WebService::GData::Node::Name->new(text=>'john doe');
+    my $category = WebService::GData::Node::Category->new(scheme=>'author','yt:term'=>'Author');
     
     #or coming from a json feed:
-    my $category = new WebService::GData::Node::Category({scheme=>'author','yt$term'=>'Author'});
+    my $category = WebService::GData::Node::Category->new({scheme=>'author','yt$term'=>'Author'});
     
     
     
@@ -318,7 +318,7 @@ Example:
 
     use WebService::GData::Node;
 	
-    my $node   = new WebService::GData::Node(text=>'hi');
+    my $node   = WebService::GData::Node->new(text=>'hi');
     
        $node->text();#hi;
        
@@ -339,13 +339,13 @@ The attributes setter/getters and the text method are generated on the fly.
 =item * Attributes containing namespaces can be accessed by replacing ':' with
 '_' or by just skipping the namespace prefix. yt:format attribute can be set/get via the yt_format method or format.
 You should use the qualified attribute when setting it via the constructor.
-Therefore, new Node(yt_format=>1) will not work but new Node('yt:format'=>1) and new Node({'yt$format'=>1}) will work.
+Therefore, Node->new(yt_format=>1) will not work but Node->new('yt:format'=>1) and Node->new({'yt$format'=>1}) will work.
 
 Example:
 
     use WebService::GData::Node::FeedLink;
     
-    my $feedlink = new WebService::GData::Node::FeedLink($link);
+    my $feedlink = WebService::GData::Node::FeedLink->new($link);
     
     $feedlink->countHint;
     
@@ -384,9 +384,9 @@ B<Returns>
 
 Example:
 
-    my $author   = new WebService::GData::Node::Author();
-    my $name     = new WebService::GData::Node::Name(text=>'john doe');
-    my $category = new WebService::GData::Node::Category(scheme=>'author',term=>'Author');
+    my $author   = WebService::GData::Node::Author->new();
+    my $name     = WebService::GData::Node::Name->new(text=>'john doe');
+    my $category = WebService::GData::Node::Category->new(scheme=>'author',term=>'Author');
     
     $author->child($name)->child($category);
     
@@ -423,13 +423,13 @@ B<Returns>
 
 Example:
 
-    my $author   = new WebService::GData::Node::Author();
-    my $name     = new WebService::GData::Node::Name(text=>'john doe');
-    my $category = new WebService::GData::Node::Category(scheme=>'author',term=>'Author');
+    my $author   = WebService::GData::Node::Author->new();
+    my $name     = WebService::GData::Node::Name->new(text=>'john doe');
+    my $category = WebService::GData::Node::Category->new(scheme=>'author',term=>'Author');
     
     $author->child($name)->child($category);
     
-    my $newname = new WebService::GData::Node::Name(text=>'billy doe');
+    my $newname = WebService::GData::Node::Name->new(text=>'billy doe');
     $author->swap($name,$newname);
     
 	   
@@ -519,7 +519,7 @@ Example:
    
    use WebService::GData::Node::Category();
    
-   my $category = new WebService::GData::Node::Category('yt:term'=>'term');
+   my $category = WebService::GData::Node::Category->new('yt:term'=>'term');
       $category->yt_term('youtube term');
       
 	   

@@ -51,7 +51,7 @@ sub install_sub {
                 return $this->_set_query( $field, $val );
             }
             else {
-                die new WebService::GData::Error( 'invalid_parameter_type',
+                die WebService::GData::Error->new( 'invalid_parameter_type',
                     $subname . '() did not get a proper value.' );
             }
         }
@@ -195,7 +195,7 @@ WebService::GData::Query - implements the core query parameters available in the
     use WebService::GData::Query;
     use WebService::GData::Constants qw(:format :query :general);
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->to_query_string();# by default:?alt=json&v=2&prettyprint=false&strict=true
 
@@ -276,7 +276,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->to_query_string();# by default:?alt=json&v=2&prettyprint=false&strict=true
 
@@ -314,7 +314,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->get('alt');#json
 
@@ -352,7 +352,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->to_query_string();#?alt=json&v=2&prettyprint=false&strict=true
     "$query";                 #?alt=json&v=2&prettyprint=false&strict=true
@@ -406,7 +406,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->strict('true');
 
@@ -446,7 +446,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->fields('id,entry(author)');#only get the id and the author in the entry tag
 
@@ -513,7 +513,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->prettyprint('true');
 
@@ -550,7 +550,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->author('GoogleDeveloper');
 
@@ -770,7 +770,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->limit(10,5);
     #equivalent to
@@ -815,7 +815,7 @@ Example:
     use WebService::GData::Query;
 
     
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->q('"exact phrase" snowbaord sports -ski');
 
@@ -858,7 +858,7 @@ Example:
 
     use WebService::GData::Query;
 
-    my $query = new WebService::GData::Query();
+    my $query = WebService::GData::Query->new();
 
     $query->category('-Shows,Entertainment|Sports');
 

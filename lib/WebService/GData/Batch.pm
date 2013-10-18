@@ -72,7 +72,7 @@ XML
 	sub execute {
 		my $this = shift;
 		if(@{$this->{_entry}}>0){
-			return new GData::Batch::Response( $this->{_dbh}->post($this->link,$this->_serialize,1) );
+			return GData::Batch::Response->new( $this->{_dbh}->post($this->link,$this->_serialize,1) );
 		}
 	}
 

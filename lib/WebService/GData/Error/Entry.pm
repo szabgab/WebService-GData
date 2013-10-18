@@ -65,7 +65,7 @@ WebService::GData::Error::Entry - Wrap an xml error sent back by Google data API
     use WebService::GData::Error;
 
     #parse an error from a Google data API server...
-    my $entry = new WebService::GData::Error::Entry($xmlerror);
+    my $entry = WebService::GData::Error::Entry->new($xmlerror);
     $entry->code;
     $entry->internalreason;
     $entry->domain;
@@ -73,7 +73,7 @@ WebService::GData::Error::Entry - Wrap an xml error sent back by Google data API
     $entry->location->{content};#this is just a hash
 
     #create an error from a Google data API server...
-    my $entry = new WebService::GData::Error::Entry();
+    my $entry = WebService::GData::Error::Entry->new();
     $entry->code('too_long');
     $entry->domain('your_domain');
     $entry->location({type=>'header',content=>'Missing Version header'});
@@ -102,7 +102,7 @@ Example:
     use WebService::GData::Error;
 
     #parse an error from a Google data API server...
-    my $entry = new WebService::GData::Error::Entry($xmlerror);
+    my $entry = WebService::GData::Error::Entry->new($xmlerror);
     $entry->code;
     $entry->internalreason;
     $entry->domain;
@@ -110,7 +110,7 @@ Example:
     $entry->location->{content};#this is just a hash
 
     #create an error from a Google data API server...
-    my $entry = new WebService::GData::Error::Entry();
+    my $entry = WebService::GData::Error::Entry->new();
     $entry->code('too_long');
     $entry->domain('your_domain');
     $entry->location({type=>'header',content=>'Missing Version header'});

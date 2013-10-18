@@ -50,7 +50,7 @@ WebService::GData::Feed::Entry - Base class wrapping json atom feed entry tags f
 
     use WebService::GData::Feed::Entry;
 
-    my $feed = new WebService::GData::Feed::Entry($jsonfeed->{entry}->[0]);
+    my $feed = WebService::GData::Feed::Entry->new($jsonfeed->{entry}->[0]);
 
     $feed->title;
     $feed->author;
@@ -129,7 +129,7 @@ Example:
 
     use WebService::GData::Feed::Entry;
     
-    my $entry = new WebService::GData::Feed::Entry($entry);
+    my $entry = WebService::GData::Feed::Entry->new($entry);
     
     $entry->content->src();#http://www.youtube.com/v/qWAY3...
     
@@ -177,7 +177,7 @@ Example:
 
     use WebService::GData::Feed::Entry;
     
-    my $feed = new WebService::GData::Feed::Entry($jsonentry);
+    my $feed = WebService::GData::Feed::Entry->new($jsonentry);
     
     $feed->published();#"2010-09-20T13:49:20.028Z"
    
@@ -219,7 +219,7 @@ Example:
 
     use WebService::GData::Feed::Entry;
     
-    my $entry = new WebService::GData::Feed::Entry();
+    my $entry = WebService::GData::Feed::Entry->new();
     
     $entry->summary("This video is about...");
     

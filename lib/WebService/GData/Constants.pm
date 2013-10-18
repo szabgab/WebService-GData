@@ -151,10 +151,10 @@ WebService::GData::Constants - constants (namespaces,format,services...) used fo
     use WebService::GData::Base;
     use WebService::GData::ClientLogin;
 
-    my $auth = new WebService::GData::ClientLogin(service=> BOOK_SERVICE,....);
+    my $auth = WebService::GData::ClientLogin->new(service=> BOOK_SERVICE,....);
 
 
-    my $base = new WebService::GData::Base();
+    my $base = WebService::GData::Base->new();
 	   $base->query()->alt(JSON);
 
     #if not imported
