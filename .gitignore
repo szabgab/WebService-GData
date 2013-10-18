@@ -1,6 +1,7 @@
 *.swp
 META.*
 MYMETA.*
+MANIFEST
 Makefile
 Makefile.old
 blib/

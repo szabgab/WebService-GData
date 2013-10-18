@@ -2,7 +2,7 @@ package WebService::GData::Node;
 use WebService::GData;
 use base 'WebService::GData';
 
-our $VERSION = 0.01_03;
+our $VERSION = 0.06;
 
 my $attributes = [];
 
