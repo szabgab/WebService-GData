@@ -94,7 +94,7 @@ Before you can perform any operations with the YouTube Data API, you must initia
    use WebService::GData::YouTube; 
    #WebService::GData must in the Perl path
    #installed via cpan, it should be there already.
-   my $yt = new WebService::GData::YouTube();
+   my $yt = WebService::GData::YouTube->new();
 
 To use API functionality that requires user authentication, you will also need to include one of the following helper classes, 
 depending on whether you plan to use AuthSub(NOT IMPLEMENTED),OAuth(NOT IMPLEMENTED YET) or ClientLogin authentication.
@@ -147,7 +147,7 @@ Please visit L<http://code.google.com/apis/youtube/dashboard> to obtain a develo
     my $auth;
 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
             email    => '...',
             password => '...',
             key      => '...'
@@ -157,7 +157,7 @@ Please visit L<http://code.google.com/apis/youtube/dashboard> to obtain a develo
         #$error->code,$error->content...
     }
     
-    my $yt = new WebService::GData::YouTube($auth);
+    my $yt = WebService::GData::YouTube->new($auth);
 
 
 
@@ -327,7 +327,7 @@ Note that you do not need to be authenticated to retrieve standard feeds.
 
     sub display_standard_feeds {
  
-        my $yt = new WebService::GData::YouTube();
+        my $yt = WebService::GData::YouTube->new();
 
         my $videos = $yt->get_recently_featured_videos();
   
@@ -358,7 +358,7 @@ The following code demonstrates how to retrieve a feed of videos uploaded by a p
 
     sub get_user_videos {     
         my $channel = shift;
-        my $yt = new WebService::GData::YouTube();
+        my $yt = WebService::GData::YouTube->new();
         return $yt->get_user_videos($channel);
     }  
 

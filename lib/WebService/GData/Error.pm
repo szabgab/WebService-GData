@@ -40,7 +40,7 @@ our $VERSION  = 1.02;
 		my ($this) = @_;
 		my @errors = $this->{_errstr}=~m/<error>(.+?)<\/error>/gms;
 		foreach my $error (@errors) {
-		   my $entry  = new WebService::GData::Error::Entry($error);
+		   my $entry  = WebService::GData::Error::Entry->new($error);
 		   push @{$this->{_errors}},$entry;
 		}
 	};
@@ -62,12 +62,12 @@ WebService::GData::Error - create an error and parse errors from Google data API
     use WebService::GData::Error;
 
     #create an error object that you can throw by dying...
-    my $error = new WebService::GData::Error(401,'Unauthorized');
+    my $error = WebService::GData::Error->new(401,'Unauthorized');
     # $error->code;
     # $error->content;
 
     #create an error object in response to a Google Service.
-    my $error = new WebService::GData::Error(401,$responseFromAService);
+    my $error = WebService::GData::Error->new(401,$responseFromAService);
     print $error->code;
     print $error->content;#raw xml content
 
@@ -95,7 +95,7 @@ Example:
 
     use WebService::GData::Base;
 
-    my $base = new WebService::GData::Base();
+    my $base = WebService::GData::Base->new();
 	
     eval {
         $base->get($url);
@@ -141,7 +141,7 @@ Example:
     use WebService::GData::Error;
 
     #create an error object that you can throw by dying...
-    my $error = new WebService::GData::Error(401,'Unauthorized');
+    my $error = WebService::GData::Error->new(401,'Unauthorized');
 	
 =back
 
@@ -175,7 +175,7 @@ Example:
     use WebService::GData::Error;
 
     #create an error object that you can throw by dying...
-    my $error = new WebService::GData::Error(401,'Unauthorized');
+    my $error = WebService::GData::Error->new(401,'Unauthorized');
        $error->code;#401
 	   
 =back
@@ -210,7 +210,7 @@ Example:
     use WebService::GData::Error;
 
     #create an error object that you can throw by dying...
-    my $error = new WebService::GData::Error(401,'Unauthorized');
+    my $error = WebService::GData::Error->new(401,'Unauthorized');
        $error->content;#Unauthorized
 
 =back

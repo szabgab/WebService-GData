@@ -86,7 +86,7 @@ WebService::GData::YouTube::Constants - constants used for YouTube service.
     use WebService::GData::YouTube;
 
 
-    my $yt     = new WebService::GData::YouTube();
+    my $yt     = WebService::GData::YouTube->new();
 	my $videos = $yt->get_top_rated_videos('JP','Comedy',TODAY);
 	   
 	

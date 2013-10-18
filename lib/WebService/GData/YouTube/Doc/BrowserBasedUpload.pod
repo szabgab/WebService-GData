@@ -14,7 +14,7 @@ WebService::GData::YouTube::Doc::BrowserBasedUpload - YouTube Video browser base
     
     my $auth; 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
                 email=>'********@gmail.com',
                 password=>'*********',
                 key=>KEY
@@ -30,7 +30,7 @@ WebService::GData::YouTube::Doc::BrowserBasedUpload - YouTube Video browser base
 
     #create an empty video placeholder with read access
     
-    my $video = new WebService::GData::YouTube($auth)->video;
+    my $video = WebService::GData::YouTube->new($auth)->video;
 
     #set the data (from a form for example):
     
@@ -172,7 +172,7 @@ Example:
     
     my $auth; 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
                 email=>'********@gmail.com',
                 password=>'*********',
                 key=>KEY
@@ -207,11 +207,11 @@ Example:
     use WebService::GData::YouTube;
 	
     #log in
-    my $auth = new WebService::GData::ClientLogin(...);
+    my $auth = WebService::GData::ClientLogin->new(...);
 
     #create an empty video placeholder with read access
     
-    my $video = new WebService::GData::YouTube($auth)->video;
+    my $video = WebService::GData::YouTube->new($auth)->video;
 
 Now you have a place holder, it is just a matter of filling the proper information.
 You should create a form where the user would enter the following information(* specify an optional information):
@@ -237,9 +237,9 @@ Example:
     use CGI;
     #create an empty video placeholder with read access
     
-    my $video = new WebService::GData::YouTube($auth)->video;
+    my $video = WebService::GData::YouTube->new($auth)->video;
 
-    my $request= new CGI;
+    my $request= CGI->new;
     
     $video->title($request->param('title'));
     
@@ -275,9 +275,9 @@ Example:
     use CGI;
     #create an empty video placeholder with read access
     
-    my $video = new WebService::GData::YouTube($auth)->video;
+    my $video = WebService::GData::YouTube->new($auth)->video;
 
-    my $request= new CGI;
+    my $request= CGI->new;
     
     $video->title($request->param('title'));
     

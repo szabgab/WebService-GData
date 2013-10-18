@@ -27,7 +27,7 @@ sub __init {
     $this->{email}    = $params{email};
     $this->{password} = $params{password};
 
-    die new WebService::GData::Error( 'invalid_parameters',
+    die WebService::GData::Error->new( 'invalid_parameters',
         'Password and Email are required to log in.' )
       if ( !$params{password} || !$params{email} );
 
@@ -103,11 +103,11 @@ private _post => sub {
         if (   $res->code == 500
             && $res->content() =~ m/www.google.com:443 \(Invalid argument\)/ )
         {
-            die new WebService::GData::Error( 'missing_ssl_module',
+            die WebService::GData::Error->new( 'missing_ssl_module',
                 'Crypt::SSLeay must be installed in order to use ssl.' );
         }
         my $error = _parse_response( 'Error', $res->content );
-        die new WebService::GData::Error( $error, $res->content );
+        die WebService::GData::Error->new( $error, $res->content );
     }
 };
 
@@ -165,12 +165,12 @@ WebService::GData::ClientLogin - implements ClientLogin authorization for google
     use WebService::GData::ClientLogin;
 
     #create an object that only has read access
-    my $base = new WebService::GData::Base();
+    my $base = WebService::GData::Base->new();
     
     my $auth;
 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
             email    => '...',
             password => '...',
             service  => '...', #default to youtube,
@@ -201,7 +201,7 @@ WebService::GData::ClientLogin - implements ClientLogin authorization for google
     #if it fails a first time, you will need to add captcha related parameters:
     my $auth;
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
             email          => '...',
             password       => '...',
             captcha_token  => '...',
@@ -212,7 +212,7 @@ WebService::GData::ClientLogin - implements ClientLogin authorization for google
     #youtube specific developer key 
     my $auth;
     eval {	
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
              email    => '...',
              password => '...',
               key      => '...',
@@ -333,14 +333,14 @@ Example:
     use WebService::GData::Base;
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...',
         captcha_token  => '...',
         captcha_answer => '...'
     );
     
-    my $base = new WebService::GData::YouTube(auth=>$auth);
+    my $base = WebService::GData::YouTube->new(auth=>$auth);
 
 =back
 
@@ -375,7 +375,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -411,7 +411,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -447,7 +447,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -482,7 +482,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -517,7 +517,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -556,7 +556,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...',
         key            => '...'
@@ -599,7 +599,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -635,7 +635,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...',
     );
@@ -674,7 +674,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -716,7 +716,7 @@ Example:
 
     use WebService::GData::ClientLogin;	
     
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email          => '...',
         password       => '...'
     );
@@ -747,7 +747,7 @@ Example:
 
     my $auth;	
     eval {
-        $auth   = new WebService::GData::ClientLogin(
+        $auth   = WebService::GData::ClientLogin->new(
             email => '...',#from the user
             password =>'...',#from the user
             service =>'youtube',
@@ -791,7 +791,7 @@ Example:
     
     my $auth;	
     eval {
-        $auth   = new WebService::GData::ClientLogin(
+        $auth   = WebService::GData::ClientLogin->new(
             email => '...',#from the user
             password =>'...',#from the user
             service =>'youtube',

@@ -30,11 +30,11 @@ sub __init {
 	my ( $this, $auth ) = @_;
 	$this->{_baseuri} = $BASE_URI . $PROJECTION . '/';
 	
-	$this->{_request} = new WebService::GData::Base();
+	$this->{_request} = WebService::GData::Base->new();
 	$this->{_request}->auth($auth) if ($auth);
 $this->{__cache__}={};
 	#overwrite default query engine to support youtube extra feature
-	my $query = new WebService::GData::YouTube::Query();
+	my $query = WebService::GData::YouTube::Query->new();
 	$query->key( $auth->key ) if ($auth);
 	$this->query($query);
 }
@@ -79,7 +79,7 @@ sub get_user_playlist_by_id {
 	  $this->{_request}->get(@request);
 
 	my $feed =
-	  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+	  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
     $this->{__cache__}->{$playlistid}= $feed->next_link;
 
@@ -109,7 +109,7 @@ sub get_user_playlists {
 	my $res = $this->{_request}->get(@request);
 
 	my $feed =
-	  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+	  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
     $this->{__cache__}->{$uri}= $feed->next_link;
 
@@ -126,7 +126,7 @@ sub get_user_profile {
     my $res = $this->{_request}->get($uri);
 
     my $playlists =
-      new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+      WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
     return $playlists->entry->[0];
 }
@@ -141,7 +141,7 @@ sub get_user_contacts {
     my $res = $this->{_request}->get($uri);
 
     my $contacts =
-      new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+      WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
     return $contacts->entry;
 }
@@ -155,7 +155,7 @@ sub get_user_inbox {
     my $res = $this->{_request}->get($uri);
 
     return
-      new WebService::GData::YouTube::Feed( $res, $this->{_request} )->entry;
+      WebService::GData::YouTube::Feed->new( $res, $this->{_request} )->entry;
 
 }
 
@@ -202,32 +202,32 @@ sub add_favorite_video {
 
 sub video {
 	my $this = shift;
-	return new WebService::GData::YouTube::Feed::Video( $this->{_request} );
+	return WebService::GData::YouTube::Feed::Video->new( $this->{_request} );
 }
 
 sub playlists {
     my $this = shift;
-    return new WebService::GData::YouTube::Feed::PlaylistLink( $this->{_request} );
+    return WebService::GData::YouTube::Feed::PlaylistLink->new( $this->{_request} );
 }
 
 sub comment {
 	my $this = shift;
-	return new WebService::GData::YouTube::Feed::Comment( $this->{_request} );
+	return WebService::GData::YouTube::Feed::Comment->new( $this->{_request} );
 }
 
 sub complaint {
     my $this = shift;
-    return new WebService::GData::YouTube::Feed::Complaint( $this->{_request} );
+    return WebService::GData::YouTube::Feed::Complaint->new( $this->{_request} );
 }
 
 sub contact {
     my $this = shift;
-    return new WebService::GData::YouTube::Feed::Friend( $this->{_request} );
+    return WebService::GData::YouTube::Feed::Friend->new( $this->{_request} );
 }
 
 sub message {
     my $this = shift;
-    return new WebService::GData::YouTube::Feed::VideoMessage( $this->{_request} );
+    return WebService::GData::YouTube::Feed::VideoMessage->new( $this->{_request} );
 }
 
 sub search_video {
@@ -235,7 +235,7 @@ sub search_video {
 	$this->query($query) if ($query);
 	my $res = $this->{_request}->get( $this->{_baseuri} . 'videos/' );
 	my $playlists =
-	  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+	  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 	return $playlists->entry;
 }
 
@@ -247,7 +247,7 @@ sub get_video_by_id {
 	my $res = $this->{_request}->get($uri);
 
 	my $playlists =
-	  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+	  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
 	return $playlists->entry->[0];
 }
@@ -262,7 +262,7 @@ sub get_user_video_by_id {
 	my $res = $this->{_request}->get($uri);
 
 	my $playlists =
-	  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+	  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
 	return $playlists->entry->[0];
 }
@@ -276,7 +276,7 @@ sub get_user_videos {
 	my $res = $this->{_request}->get($uri);
 
 	my $playlists =
-	  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+	  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
 	return $playlists->entry;
 }
@@ -291,7 +291,7 @@ sub get_user_favorite_videos {
 	my $res = $this->{_request}->get($uri);
 
 	my $feed =
-	  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+	  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
 	return $feed->entry;
 }
@@ -304,7 +304,7 @@ sub get_recommended_videos {
     my $res = $this->{_request}->get($uri);
 
     my $feed =
-      new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+      WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 
     return $feed->entry;
 }
@@ -313,7 +313,7 @@ sub get_recommended_videos {
 #	my ( $this, %params ) = @_;
 
 #	my $playlistLink =
-#	  new WebService::GData::YouTube::Feed::PlaylistLink( {},
+#	  WebService::GData::YouTube::Feed::PlaylistLink->new( {},
 #		$this->{_request} );
 
 	#delete old one
@@ -352,7 +352,7 @@ foreach my $stdfeed (
 		my $res = $this->{_request}->get($uri);
 
 		my $playlists =
-		  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+		  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 		return $playlists->entry;
 	  }
 }
@@ -366,7 +366,7 @@ foreach my $feed (qw(comments responses related)) {
 		my $res = $this->{_request}->get($uri);
 
 		my $playlists =
-		  new WebService::GData::YouTube::Feed( $res, $this->{_request} );
+		  WebService::GData::YouTube::Feed->new( $res, $this->{_request} );
 		return $playlists->entry;
 	  }
 }
@@ -387,7 +387,7 @@ WebService::GData::YouTube - Access YouTube contents(read/write) with API v2.
     use WebService::GData::YouTube;
 
     #create an object that only has read access
-    my $yt = new WebService::GData::YouTube();
+    my $yt = WebService::GData::YouTube->new();
 
     #get a feed response from YouTube;
     my $videos  = $yt->get_top_rated_videos;
@@ -401,14 +401,14 @@ WebService::GData::YouTube - Access YouTube contents(read/write) with API v2.
     }
 
     #connect to a YouTube account
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email   =>'...'
         password=>'...',
         key     =>'...'
     );
 
     #give write access
-    my $yt = new WebService::GData::YouTube($auth);
+    my $yt = WebService::GData::YouTube->new($auth);
 
     #returns all the videos from the logged in user 
     #including private ones.
@@ -535,17 +535,17 @@ Example:
     use WebService::GData::YouTube;
 
     #create an object that only has read access
-    my $yt = new WebService::GData::YouTube();
+    my $yt = WebService::GData::YouTube->new();
 
     #connect to a YouTube account
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email=>'...'
         password=>'...',
         key        =>'...'
     );
 
     #give write access with a $auth object that you created
-    my $yt = new WebService::GData::YouTube($auth);
+    my $yt = WebService::GData::YouTube->new($auth);
 
 =back
 
@@ -583,7 +583,7 @@ Example:
 
 	use WebService::GData::YouTube;
 
-   	my $yt = new WebService::GData::YouTube();
+   	my $yt = WebService::GData::YouTube->new();
 
 	$yt->query()->q("ski")->limit(10,0);
 
@@ -670,7 +670,7 @@ Example:
 
     use WebService::GData::YouTube;
     
-    my $yt   = new WebService::GData::YouTube();
+    my $yt   = WebService::GData::YouTube->new();
        $yt->connection->timeout(100)->env_proxy;
 
 =back
@@ -741,7 +741,7 @@ Example:
 
     use WebService::GData::YouTube;
 	
-    my $yt   = new WebService::GData::YouTube();
+    my $yt   = WebService::GData::YouTube->new();
     my $videos = $yt->get_top_rated_videos();
     my $videos = $yt->get_top_rated_videos('JP');#top rated videos in Japan
     my $videos = $yt->get_top_rated_videos('JP','Comedy');#top rated videos in Japanese Comedy 
@@ -797,7 +797,7 @@ Example:
 
     use WebService::GData::YouTube;
 	
-    my $yt   = new WebService::GData::YouTube();
+    my $yt   = WebService::GData::YouTube->new();
 
     my $video = $yt->get_video_by_id('Xzek3skD');
 
@@ -839,7 +839,7 @@ Example:
 
     use WebService::GData::YouTube;
     
-    my $yt   = new WebService::GData::YouTube();
+    my $yt   = WebService::GData::YouTube->new();
 
        $yt->query->q("ski")->limit(10,0);
 
@@ -847,7 +847,7 @@ Example:
 
     #or
 
-    my $yt     = new WebService::GData::YouTube();
+    my $yt     = WebService::GData::YouTube->new();
     my $query  = $yt->query;
        $query -> q("ski")->limit(10,0);
     my $videos = $yt->search_video();
@@ -855,7 +855,7 @@ Example:
     #or set a new query object
     #it could be a sub class that has predefined value
 
-    my $query  = new WebService::GData::YouTube::Query();
+    my $query  = WebService::GData::YouTube::Query->new();
 
        $query -> q("ski")->limit(10,0);
 
@@ -902,7 +902,7 @@ B<Throws>
 
 Example:
     
-    my $yt   = new WebService::GData::YouTube();
+    my $yt   = WebService::GData::YouTube->new();
     
     my $videos = $yt->get_related_for_video_id('Xz2eFFexA');
 
@@ -941,7 +941,7 @@ B<Throws>
 Example:
 
     use WebService::GData::YouTube; 
-    my $yt   = new WebService::GData::YouTube();
+    my $yt   = WebService::GData::YouTube->new();
     
     my $comments = $yt->get_comments_for_video_id('Xz2eFFexA');
     
@@ -996,9 +996,9 @@ B<Throws>
 
 Example:
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $videos = $yt->get_user_video_by_id('Xz2eFFexA');
 
@@ -1039,9 +1039,9 @@ B<Throws>
 
 Example:
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $videos = $yt->get_user_videos();
 
@@ -1083,9 +1083,9 @@ B<Throws>
 
 Example:
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $videos = $yt->get_user_favorite_videos();
 
@@ -1126,9 +1126,9 @@ B<Throws>
 Example:
 
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
        $yt->add_favorite_video('video_id');
 
@@ -1168,9 +1168,9 @@ B<Throws>
 
 Example:
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $videos = $yt->get_recommended_videos();
 
@@ -1218,9 +1218,9 @@ B<Throws>
 Example:
 
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
        $yt->like_video('video_id');
        $yt->dislike_video('video_id');
@@ -1274,9 +1274,9 @@ B<Throws>
 Example:
 
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
        $yt->add_video_response('video_id','video_response_id');
 
@@ -1312,9 +1312,9 @@ B<Throws>
 Example:
 
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
        $yt->delete_video_response('video_id','video_response_id');
        
@@ -1358,14 +1358,14 @@ Example:
         
     my $auth; 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
            email=>'...@gmail.com',
            password=>'...',
            key=>KEY
        );
     };     
     
-    my $yt = new WebService::GData::YouTube($auth);
+    my $yt = WebService::GData::YouTube->new($auth);
     
     #instantiate a comment
     my $comment = $yt->comment;
@@ -1424,9 +1424,9 @@ Example:
     use WebService::GData::ClientLogin;
     use WebService::GData::YouTube;
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $profile = $yt->get_user_profile;
     
@@ -1472,9 +1472,9 @@ Example:
     use WebService::GData::ClientLogin;
     use WebService::GData::YouTube;
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $contacts = $yt->get_user_contacts;
     
@@ -1519,9 +1519,9 @@ Example:
     use WebService::GData::ClientLogin;
     use WebService::GData::YouTube;
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $messages = $yt->get_user_inbox;
     
@@ -1583,9 +1583,9 @@ B<Throws>
 Example:
 
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);#not compulsory
+    my $auth = WebService::GData::ClientLogin->new(email=>...);#not compulsory
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $videos_in_playlist = $yt->get_user_playlist_by_id('CFESE01KESEQE');
     
@@ -1643,9 +1643,9 @@ Example:
 
     use WebService::GData::Base;
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     my $playlists = $yt->get_user_playlists;
 	
@@ -1659,7 +1659,7 @@ Example:
     
     #this is a working example 
     #list all the programming related tutorials from thenewboston channel:
-    my $yt = new WebService::GData::YouTube(); 
+    my $yt = WebService::GData::YouTube->new(); 
        $yt->query->max_results(50);
        
     my $playlist_counter=1;
@@ -1697,10 +1697,10 @@ Example:
     my ($auth,$videos);
 
     eval {
-        $auth = new WebService::GData::ClientLogin(email=>...);
+        $auth = WebService::GData::ClientLogin->new(email=>...);
     };
     
-    my $yt   = new WebService::GData::YouTube($auth);
+    my $yt   = WebService::GData::YouTube->new($auth);
     
     #the server is dead or the url is not available anymore or you've reach your quota of the day.
     #boom the application dies and your program fails...

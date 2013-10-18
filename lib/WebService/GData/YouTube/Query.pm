@@ -40,7 +40,7 @@ WebService::GData::YouTube::Query - implements the core query parameters availab
 	use WebService::GData::Constants qw(:all);
 
     #create an object that only has read access
-    my $query = new WebService::GData::YouTube::Query();
+    my $query = WebService::GData::YouTube::Query->new();
 
     $query->safe_search('none')->orderby('rating')->caption('true')->time('today');
 
@@ -105,7 +105,7 @@ Example:
 	use WebService::GData::YouTube::Query;
 
     #create an object that only has read access
-	my $query = new WebService::GData::YouTube::Query();
+	my $query = WebService::GData::YouTube::Query->new();
 
 	$query->to_query_string();# by default:?alt=json&v=2&prettyprint=false&strict=true
 

@@ -75,7 +75,7 @@ WebService::GData::Collection - Composite class redispatching method calls to qu
     use WebService::GData::Collection;
 
     #array ref of link nodes
-    my $links = new WebService::GData::Collection($links);
+    my $links = WebService::GData::Collection->new($links);
 
     #search through the nodes for a certain value
     my $reponse_url = $links->rel('video.responses')->[0];
@@ -126,12 +126,12 @@ B<Example>
 
     use WebService::GData::Collection;
     
-    my $collection = new WebService::GData::Collection();
+    my $collection = WebService::GData::Collection->new();
     
-    $collection->[0] = new WebService::GData::Node::AuthorEntity();
+    $collection->[0] = WebService::GData::Node::AuthorEntity->new();
     
     or
-    my $collection = new WebService::GData::Collection(\@authors);     
+    my $collection = WebService::GData::Collection->new(\@authors);
 
 =back
 
@@ -147,13 +147,13 @@ B<Example>
 
     use WebService::GData::Collection;
 
-    my $authors = new WebService::GData::Collection(\@authors);     
+    my $authors = WebService::GData::Collection->new(\@authors);
     
     foreach my $author (@$authors) {
         $author->name;
     }
     
-    push @$author,new WebService::GData::Node::AuthorEntity();
+    push @$author, WebService::GData::Node::AuthorEntity->new();
 
 =back
 
