@@ -44,7 +44,7 @@ sub is_private {
 	my $this = shift;
 
 	if ( exists $this->{_feed}->{'yt$private'} || ( @_ == 1 && !$this->{_private} ) ) {
-		$this->{_private} = new WebService::GData::YouTube::YT::Private();
+		$this->{_private} = WebService::GData::YouTube::YT::Private->new();
 		$this->_entity->child( $this->{_private} );
 		delete $this->{_feed}->{'yt$private'};
 	}
@@ -69,7 +69,7 @@ sub keywords {
 		#reset tags
 		my $old = $this->{_category};
 
-        $this->{_category} = new WebService::GData::Collection();
+        $this->{_category} = WebService::GData::Collection->new();
 
 		$this->_entity->swap( $old,$this->{_category});
 
@@ -77,7 +77,7 @@ sub keywords {
 
 		foreach (@tags) {
 			push @{ $this->category },
-			  new WebService::GData::Node::Atom::Category(
+			  WebService::GData::Node::Atom::Category->new(
 				term   => $_,
 				scheme => 'http://gdata.youtube.com/schemas/2007/tags.cat'
 			  );
@@ -172,7 +172,7 @@ WebService::GData::YouTube::Feed::PlaylistLink - playlists meta data (read/write
         
     my $auth; 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
             email=>'...',
             password=>'...',
             key=>KEY
@@ -180,7 +180,7 @@ WebService::GData::YouTube::Feed::PlaylistLink - playlists meta data (read/write
     };     
     die $@->code,$@->content if $@;  
      
-    my $yt = new WebService::GData::YouTube($auth);  
+    my $yt = WebService::GData::YouTube->new($auth);
      
     #get logged in user playlists
     
@@ -361,7 +361,7 @@ B<Throws>
 
 Example:
 
-   my $yt = new WebService::GData::YouTube($auth); 
+   my $yt = WebService::GData::YouTube->new($auth); 
 
    my $playlist = $yt->playlists;
    
@@ -370,7 +370,7 @@ Example:
    
    #or
    
-   my $yt = new WebService::GData::YouTube($auth); 
+   my $yt = WebService::GData::YouTube->new($auth); 
 
    my $playlist = $yt->get_user_playlists()->[0];//example:the first playlist in the list 
       $playlist->add_video("video_id"); 

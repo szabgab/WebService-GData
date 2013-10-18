@@ -75,7 +75,7 @@ WebService::GData::YouTube::Feed::Complaint - add a complaint about a video (rea
         
     my $auth; 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
            email=>...@gmail.com',
            password=>'...',
            key=>KEY
@@ -83,7 +83,7 @@ WebService::GData::YouTube::Feed::Complaint - add a complaint about a video (rea
     };   
     
     #instantiate a complaint
-    my $complaint = new WebService::GData::YouTube($auth)->complaint;
+    my $complaint = WebService::GData::YouTube->new($auth)->complaint;
     
     #attach the complaint to a video
     $complaint->video_id('2lDekeCDD-J1');

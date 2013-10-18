@@ -21,8 +21,8 @@ sub __init {
         $this->SUPER::__init( {}, $feed );#$feed ==$req here
     }
     
-    $this->{_statistics}= new WebService::GData::YouTube::YT::Statistics($this->{_feed}->{'yt$statistics'});
-    $this->{_feed_links}= new WebService::GData::Collection($this->{_feed}->{'gd$feedLink'}||[],undef,sub { 
+    $this->{_statistics}= WebService::GData::YouTube::YT::Statistics->new($this->{_feed}->{'yt$statistics'});
+    $this->{_feed_links}= WebService::GData::Collection->new($this->{_feed}->{'gd$feedLink'}||[],undef,sub { 
             my $elm=shift; 
             $elm= WebService::GData::Node::GD::FeedLink->new($elm) if ref $elm ne 'WebService::GData::Node::GD::FeedLink'; 
             return $elm; 
@@ -76,7 +76,7 @@ WebService::GData::YouTube::Feed::UserProfile - a youtube user profile for data 
 
     use WebService::GData::YouTube;
     
-    my $yt = new WebService::GData::YouTube();    
+    my $yt = WebService::GData::YouTube->new();
     
     my $profile = $yt->get_user_profile('profile_name_here');
     

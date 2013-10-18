@@ -45,14 +45,14 @@ sub __init {
 
 	$this->SUPER::__init( $feed, $req );
 	$this->_media(
-		new WebService::GData::YouTube::YT::GroupEntity(
+		WebService::GData::YouTube::YT::GroupEntity->new(
 			$feed->{'media$group'} || {}
 		)
 	);
 	$this->{_rating} =
-	  new WebService::GData::YouTube::YT::Rating( $feed->{'yt$rating'} );
+	  WebService::GData::YouTube::YT::Rating->new( $feed->{'yt$rating'} );
 	$this->{_recorded} =
-	  new WebService::GData::YouTube::YT::Recorded( $feed->{'yt$recorded'} );
+	  WebService::GData::YouTube::YT::Recorded->new( $feed->{'yt$recorded'} );
 	$this->_entity->child( $this->_media )->child( $this->{_rating} )
 	  ->child( $this->{_recorded} );
 }
@@ -70,14 +70,14 @@ sub location {
 	my $where = $this->{_feed}->{'georss$where'};
 	if ( ref($where) eq 'HASH' && !$this->{_where} ) {
 		$this->_location(
-			new WebService::GData::Node::PointEntity(
+			WebService::GData::Node::PointEntity->new(
 				$where->{'gml$Point'}->{'gml$pos'}
 			)
 		);
 	}
 	else {
 		$this->{_feed}->{'georss$where'} = {};
-		$this->_location( new WebService::GData::Node::PointEntity() );
+		$this->_location( WebService::GData::Node::PointEntity->new() );
 	}
 	if ($pos) {
 		$this->_location->pos($pos);
@@ -178,10 +178,10 @@ sub category {
 	if ( @_ == 1 ) {
 		if ( !$this->_media->category->isa('WebService::GData::Collection') ) {
 			$this->_media->swap( $this->_media->category,
-				new WebService::GData::Collection() );
+				WebService::GData::Collection->new() );
 		}
 		push @{ $this->_media->category },
-		  new WebService::GData::Node::Media::Category(
+		  WebService::GData::Node::Media::Category->new(
 			{
 				'$t'    => $_[0],
 				'label' => $_[0],
@@ -236,7 +236,7 @@ sub is_private {
 	my $this = shift;
 	if ( @_ == 1 ) {
 		$this->_media->{'_private'} =
-		  new WebService::GData::YouTube::YT::Private();
+		  WebService::GData::YouTube::YT::Private->new();
 		$this->_media->_entity->child( $this->_media->{'_private'} );
 	}
 	return ( $this->_media->private ) ? 1 : 0;
@@ -266,11 +266,11 @@ sub _access_control {
 sub access_control {
 	my $this = shift;
 	if ( !$this->_access_control ) {
-		$this->_access_control( new WebService::GData::Collection() );
+		$this->_access_control( WebService::GData::Collection->new() );
 		my $access = $this->{_feed}->{'yt$accessControl'} || [];
 		foreach my $control (@$access) {
 			push @{ $this->_access_control },
-			  new WebService::GData::YouTube::YT::AccessControl($control);
+			  WebService::GData::YouTube::YT::AccessControl->new($control);
 		}
 	}
 	if ( @_ == 2 ) {
@@ -284,7 +284,7 @@ sub access_control {
 		#if not, just push a new entry;
 		else {
 			push @{ $this->_access_control },
-			  new WebService::GData::YouTube::YT::AccessControl(
+			  WebService::GData::YouTube::YT::AccessControl->new(
 				{ action => $_[0], permission => $_[1] } );
 		}
 	}
@@ -461,7 +461,7 @@ XML
 		return $this;
 	}
 	else {
-		die new WebService::GData::Error( $res->code, $res->content );
+		die WebService::GData::Error->new( $res->code, $res->content );
 	}
 
 }
@@ -512,7 +512,7 @@ WebService::GData::YouTube::Feed::Video - a Video YouTube contents(read/write) f
     use WebService::GData::YouTube;
 
     #create an object that only has read access
-    my $yt = new WebService::GData::YouTube();
+    my $yt = WebService::GData::YouTube->new();
 
     #get a feed response from YouTube;
     my $videos  = $yt->get_top_rated;
@@ -530,14 +530,14 @@ WebService::GData::YouTube::Feed::Video - a Video YouTube contents(read/write) f
     }
 
     #connect to a YouTube account
-    my $auth = new WebService::GData::ClientLogin(
+    my $auth = WebService::GData::ClientLogin->new(
         email=>'...'
         password=>'...',
         key        =>'...'
     );
 
     #give write access with a $auth object that you created
-    my $yt = new WebService::GData::YouTube($auth);
+    my $yt = WebService::GData::YouTube->new($auth);
 
     my $videos  = $yt->get_user_videos();#returns videos from the loggedin user even if private
 

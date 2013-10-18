@@ -28,8 +28,8 @@ sub __init {
     else {
         $this->SUPER::__init( {}, $feed );#$feed ==$req here
     }
-    $this->{_username}= new WebService::GData::YouTube::YT::Username($this->{_feed}->{'yt$username'});
-    $this->{_status}= new WebService::GData::YouTube::YT::Status($this->{_feed}->{'yt$status'});
+    $this->{_username} = WebService::GData::YouTube::YT::Username->new($this->{_feed}->{'yt$username'});
+    $this->{_status} = WebService::GData::YouTube::YT::Status->new($this->{_feed}->{'yt$status'});
     $this->_entity->child($this->{_username})->child($this->{_status});
     
 }
@@ -82,7 +82,7 @@ WebService::GData::YouTube::Feed::Friend - a user contact list (read/write) for 
         
     my $auth; 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
            email=>...@gmail.com',
            password=>'...',
            key=>KEY
@@ -92,7 +92,7 @@ WebService::GData::YouTube::Feed::Friend - a user contact list (read/write) for 
     #adding a contact
     
     #instantiate a $contact
-    my $contact = new WebService::GData::YouTube($auth)->contact;
+    my $contact = WebService::GData::YouTube->new($auth)->contact;
     
     #set a friend 
     $contact->username('google');
@@ -108,7 +108,7 @@ WebService::GData::YouTube::Feed::Friend - a user contact list (read/write) for 
     #deleting/updating contacts
     
     #instantiate a $contact
-    my $contacts = new WebService::GData::YouTube($auth)->get_user_contacts;
+    my $contacts = WebService::GData::YouTube->new($auth)->get_user_contacts;
     
     foreach my $contact (@$contacts){
     	if($contact->username() eq 'devil'){

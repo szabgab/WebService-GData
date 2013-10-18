@@ -83,7 +83,7 @@ WebService::GData::YouTube::Feed::VideoMessage - a video message (read/write) fo
     my $auth;
 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
             email    => '...',
             password => '...',
             key      => '...'
@@ -93,7 +93,7 @@ WebService::GData::YouTube::Feed::VideoMessage - a video message (read/write) fo
         #$error->code,$error->content...
     }
     
-    my $yt = new WebService::GData::YouTube($auth);
+    my $yt = WebService::GData::YouTube->new($auth);
      
     my $messages = $yt->get_user_inbox();   
     foreach my $message (@$messages) {
