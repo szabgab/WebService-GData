@@ -15,24 +15,24 @@ our $VERSION = 0.02_03;
 
 sub __set {
     my ($this,$func,$val)=@_;
-    die new WebService::GData::Error('forbidden_method_call',
+    die WebService::GData::Error->new('forbidden_method_call',
         'agent() is used internally.' ) if $func eq 'agent';    
 
     if(my $code = $this->{__UA__}->can($func)){
     	$code->($this->{__UA__},$val);
     	return $this;
     }
-    die new WebService::GData::Error('unknown_method_call',
+    die WebService::GData::Error->new('unknown_method_call',
         $func.'() is not a LWP::UserAgent Method.' );
 }
 
 sub __get {
 	my ($this,$func)=@_;
-    die new WebService::GData::Error('forbidden_method_call',
+    die WebService::GData::Error->new('forbidden_method_call',
         'agent() is used internally.' ) if $func eq 'agent';
 	my $code = $this->{__UA__}->can($func);
 	return $code->($this->{__UA__}) if $code;
-    die new WebService::GData::Error('unknown_method_call',
+    die WebService::GData::Error->new('unknown_method_call',
         $func.'() is not a LWP::UserAgent Method.' );
 }
 
@@ -45,7 +45,7 @@ sub __init {
     $this->{__URI__}        = undef;
     $this->{__UA__}         = LWP::UserAgent->new;
     $this->{__UA_NAME__}    = '';
-    $this->query( new WebService::GData::Query() );
+    $this->query( WebService::GData::Query->new() );
 
     $this->auth( $params{auth} )
       if ( defined $params{auth} );
@@ -208,7 +208,7 @@ private _request => sub {
         return $this->enable_compression eq TRUE ? $res->decoded_content():$res->content();
     }
     else {
-        die new WebService::GData::Error( $res->code, $res->content );
+        die WebService::GData::Error->new( $res->code, $res->content );
     }
 };
 
@@ -250,7 +250,7 @@ private _prepare_request => sub {
 
 private _error_invali_uri => sub {
     my $method = shift;
-    die new WebService::GData::Error( 'invalid_uri',
+    die WebService::GData::Error->new( 'invalid_uri',
         'The uri is empty in ' . $method . '().' );
 };
 
@@ -311,7 +311,7 @@ WebService::GData::Base - core read/write methods over HTTP for google data API 
 
     #read only
 	
-    my $base = new WebService::GData::Base();
+    my $base = WebService::GData::Base->new();
 
     my $ret  = $base->get('http://gdata.youtube.com/feeds/api/standardfeeds/top_rated');
     my $feed = $ret->{feed};
@@ -345,7 +345,7 @@ WebService::GData::Base - core read/write methods over HTTP for google data API 
 
     #overwrite WebService::GData::Query with youtube query parameters
 	
-    $base->query(new WebService::GData::YouTube::Query);
+    $base->query(WebService::GData::YouTube::Query->new);
 
     #now the query will have the following query string: 
     #?alt=json&v=2&prettyprint=false&strict=true&safeSearch=none
@@ -403,7 +403,7 @@ Example:
 
     use WebService::GData::Base;
 	
-    my $base   = new WebService::GData::Base(auth=>$auth);
+    my $base   = WebService::GData::Base->new(auth=>$auth);
 	
 =back
 
@@ -416,7 +416,7 @@ Example:
 
     use WebService::GData::Base;
 
-    my $base = new WebService::GData::Base();
+    my $base = WebService::GData::Base->new();
     
     #LWP::UserAgent timeout is set to 15 
     #and will look after environment variables for proxy settings
@@ -479,13 +479,13 @@ Example:
 	
     #should be in a eval {... }; block to catch an error...
 	
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
 
-    my $base = new WebService::GData::Base(auth=>$auth);
+    my $base = WebService::GData::Base->new(auth=>$auth);
 	
     #or
 	
-    my $base   = new WebService::GData::Base();	
+    my $base   = WebService::GData::Base->new();	
        $base  -> auth($auth);
 	   
 =back
@@ -541,9 +541,9 @@ Example:
     use WebService::GData::Base;
 	
     #should be in a eval { ... }; block...
-    my $auth   = new WebService::GData::ClientLogin(email=>...);
+    my $auth   = WebService::GData::ClientLogin->new(email=>...);
 
-    my $base   = new WebService::GData::Base(auth=>$auth);
+    my $base   = WebService::GData::Base->new(auth=>$auth);
 
     $base->query->alt(JSONC);
     
@@ -552,7 +552,7 @@ Example:
     #http://gdata.youtube.com/feeds/api/standardfeeds/top_rated?alt=jsonc&prettyprint=false&strict=true&v=2
 
     #or set a new query object:
-    $base->query(new WebService::GData::YouTube::Query());
+    $base->query(WebService::GData::YouTube::Query->new());
 
 =back
 
@@ -595,9 +595,9 @@ Example:
     #using override_method makes sense only if you are logged in
     #and want to do some write methods.
 
-    my $auth = new WebService::GData::ClientLogin(email=>...);
+    my $auth = WebService::GData::ClientLogin->new(email=>...);
 
-    my $base = new WebService::GData::Base(auth=>$auth);
+    my $base = WebService::GData::Base->new(auth=>$auth);
 
     $base->override_method(TRUE);
 	
@@ -641,7 +641,7 @@ Example:
 
     use WebService::GData::Constants qw(:all);
     use WebService::GData::Base;
-	my $base = new WebService::GData::Base();
+	my $base = WebService::GData::Base->new();
        $base->enable_compression(TRUE);
     
     my $ret = $base->get($url);#the data was gzipped and ungzipped if possible
@@ -676,7 +676,7 @@ Example:
 
     use WebService::GData::Base;
 	
-    my $base = new WebService::GData::Base();
+    my $base = WebService::GData::Base->new();
 
     $base->get('http://www.example.com?v=2');
 	
@@ -714,7 +714,7 @@ Example:
 
     use WebService::GData::Base;
 	
-    my $base = new WebService::GData::Base();
+    my $base = WebService::GData::Base->new();
 
     $base->get('http://www.example.com?v=2');
 	
@@ -770,7 +770,7 @@ Example:
 
     use WebService::GData::Base;
 	
-    my $base   = new WebService::GData::Base();
+    my $base   = WebService::GData::Base->new();
     
     $base->get('http://gdata.youtube.com/feeds/api/standardfeeds/top_rated');
 	
@@ -830,7 +830,7 @@ Example:
     use WebService::GData::Base;
 	
     #you must be authorized to do any write actions.
-    my $base   = new WebService::GData::Base(auth=>...);
+    my $base   = WebService::GData::Base->new(auth=>...);
     
     #create a new entry with application/x-www-form-urlencoded content-type
     my $ret = $base->post($url,$content);
@@ -876,7 +876,7 @@ Example:
     use WebService::GData::Base;
 	
     #you must be authorized to do any write actions.
-    my $base   = new WebService::GData::Base(auth=>...);
+    my $base   = WebService::GData::Base->new(auth=>...);
     
     #create a new entry with application/atom+xml; charset=UTF-8 content-type
     my $ret = $base->insert($url,$content);
@@ -921,7 +921,7 @@ Example:
     use WebService::GData::Base;
 	
     #you must be authorized to do any write actions.
-    my $base   = new WebService::GData::Base(auth=>...);
+    my $base   = WebService::GData::Base->new(auth=>...);
     
     #create a new entry with application/atom+xml; charset=UTF-8 content-type
     my $ret = $base->upate($url,$content);
@@ -964,7 +964,7 @@ Example:
     use WebService::GData::Base;
 	
     #you must be authorized to do any write actions.
-    my $base   = new WebService::GData::Base(auth=>...);
+    my $base   = WebService::GData::Base->new(auth=>...);
     
     #create a new entry with application/atom+xml; charset=UTF-8 content-type
     my $ret = $base->delete($url);
@@ -987,7 +987,7 @@ Example:
 
     use WebService::GData::Base;
 	
-    my $base   = new WebService::GData::Base();
+    my $base   = WebService::GData::Base->new();
 	
     #the server is dead or the url is not available anymore or you've reach your quota of the day.
     #boom the application dies and your program fails...

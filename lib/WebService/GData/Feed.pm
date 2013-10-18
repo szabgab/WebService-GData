@@ -13,12 +13,12 @@ sub __init {
 	
 	$this->SUPER::__init($params);
 	
-    $this->{_items_per_page}=new WebService::GData::Node::OpenSearch::ItemsPerPage($this->{_feed}->{'openSearch$itemsPerPage'});
+    $this->{_items_per_page} = WebService::GData::Node::OpenSearch::ItemsPerPage->new($this->{_feed}->{'openSearch$itemsPerPage'});
     $this->_entity->child($this->{_items_per_page});
-    $this->{_start_index}=new WebService::GData::Node::OpenSearch::StartIndex($this->{_feed}->{'openSearch$startIndex'});
+    $this->{_start_index} = WebService::GData::Node::OpenSearch::StartIndex->new($this->{_feed}->{'openSearch$startIndex'});
     $this->_entity->child($this->{_start_index});
     
-    $this->{_total_results}=new WebService::GData::Node::OpenSearch::TotalResults($this->{_feed}->{'openSearch$totalResults'});
+    $this->{_total_results} = WebService::GData::Node::OpenSearch::TotalResults->new($this->{_feed}->{'openSearch$totalResults'});
     $this->_entity->child($this->{_total_results});
 
     $this->{_request}= $request;
@@ -113,7 +113,7 @@ WebService::GData::Feed - Base class wrapping json atom feed for google data API
 
     use WebService::GData::Feed;
 
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
 
     $feed->title;
     $feed->author;
@@ -198,7 +198,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed();
+    my $feed = WebService::GData::Feed->new();
     
     $feed->title("my Title");
     
@@ -236,7 +236,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     $feed->id();#"tag:youtube.com,2008:video"
    
@@ -270,7 +270,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     $feed->updated();#"2010-09-20T13:49:20.028Z"
    
@@ -306,7 +306,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     my $categories = $feed->category();
     foreach my $category (@$categories) {
@@ -354,7 +354,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
    $feed->etag();#W/\"CkICQX45cCp7ImA9Wx5XGUQ.\"
    
@@ -391,7 +391,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
    my $authors=  $feed->author();
    
@@ -445,7 +445,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     $feed->total_items();#1000000
     
@@ -478,7 +478,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     $feed->total_results();#1000000
     
@@ -510,7 +510,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     $feed->start_index();#1
     
@@ -543,7 +543,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     $feed->items_per_page();#25
     
@@ -574,7 +574,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     my $links = $feed->links();
     foreach my $link (@$links){
@@ -631,7 +631,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
 
     my $previous_url= $feed->get_link('previous');
     
@@ -687,7 +687,7 @@ Example:
 
     use WebService::GData::Feed;
     
-    my $feed = new WebService::GData::Feed($jsonfeed);
+    my $feed = WebService::GData::Feed->new($jsonfeed);
     
     my $entries = $feed->entry('WebService::GData::Feed::Entry');#force a particular class to be used
     my $entries = $feed->entry();#let entry figure it out by looking at the feed meta information.

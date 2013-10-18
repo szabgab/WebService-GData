@@ -188,7 +188,7 @@ WebService::GData - Google data protocol v2.
     
     use WebService::MyService; 
 
-    my $object = new WebService::MyService(name=>'test');
+    my $object = WebService::MyService->new(name=>'test');
 
     $object->name;#test
     
@@ -275,7 +275,7 @@ B<Returns>
 Example:
 
 
-    my $object = new WebService::GData(firstname=>'doe',lastname=>'john',age=>'123');
+    my $object = WebService::GData->new(firstname=>'doe',lastname=>'john',age=>'123');
 
     $object->{firstname};#doe
     $object->firstname;#doe
@@ -420,7 +420,7 @@ Example:
 
     #in user code:
 
-    my $user = new Basic::User(firstname=>'doe',lastname=>'john',age=>100,gender=>'need_confirmation');
+    my $user = Basic::User->(firstname=>'doe',lastname=>'john',age=>100,gender=>'need_confirmation');
 
     $user->age;#100
     $user->firstname;#doe
@@ -475,7 +475,7 @@ Example:
 
     #in user code:
 	
-    my $user = new Basic::User();
+    my $user = Basic::User->new();
 
     $user->my_secret_method();#throw an error
 	
@@ -528,7 +528,7 @@ Example:
 
     #in user code:
 	
-    my $user = new Basic::User();
+    my $user = Basic::User->new();
 
     $user->etag("ddd")->title("dddd");#does nothing at all
 

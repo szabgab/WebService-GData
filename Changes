@@ -1,5 +1,7 @@
 Revision history for Perl extension WebService::GData.
 
+    - Replace indirect new Class calls by direct Class->new calls
+
 0.06 2013-10-18
 
     - Fix RT #88899 warning on each in perl 5.18
