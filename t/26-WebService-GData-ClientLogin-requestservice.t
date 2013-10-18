@@ -2,6 +2,7 @@ use Test::More;
 
 use LWP::UserAgent;
 sub skipit { plan skip_all =>shift(); };
+skipit("AUTOMATED_TESTING") if $ENV{AUTOMATED_TESTING};
 
 eval("use Crypt::SSLeay;");
 if ($@) {
