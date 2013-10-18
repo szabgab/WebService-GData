@@ -1,6 +1,7 @@
 Revision history for Perl extension WebService::GData.
 
     - Replace indirect new Class calls by direct Class->new calls
+    - skip test when AUTOMATED_TESTING is set RT #83676
 
 0.06 2013-10-18
 
