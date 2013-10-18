@@ -23,7 +23,7 @@ WebService::GData::YouTube::StagingServer - switch to the staging server.
     #all interaction will be done via the staging server
     #uncomment the use line to go back to live server
     
-    my $yt = new WebService::GData::YouTube();
+    my $yt = WebService::GData::YouTube->new();
 
 
 =head1 DESCRIPTION

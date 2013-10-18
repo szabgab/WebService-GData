@@ -74,7 +74,7 @@ sub save {
 
 	if ( $this->video_id ) {
 		if ( $this->in_reply_to ) {
-			$this->swap($this->{_link}, new WebService::GData::Node::Atom::Link(
+			$this->swap($this->{_link}, WebService::GData::Node::Atom::Link->new(
 				
 				rel  => $RESPONSE_REL,
 				type => $RESPONSE_TYPE,
@@ -104,7 +104,7 @@ WebService::GData::YouTube::Feed::Comment - a comment for a video (read/write) f
 
     use WebService::GData::YouTube;
     
-    my $yt = new WebService::GData::YouTube();    
+    my $yt = WebService::GData::YouTube->new();
     
     my $comments = $yt->get_comments_for_video_id('2lDekeCDD-J1');
     
@@ -122,7 +122,7 @@ WebService::GData::YouTube::Feed::Comment - a comment for a video (read/write) f
         
     my $auth; 
     eval {
-        $auth = new WebService::GData::ClientLogin(
+        $auth = WebService::GData::ClientLogin->new(
            email=>...@gmail.com',
            password=>'...',
            key=>KEY
@@ -130,7 +130,7 @@ WebService::GData::YouTube::Feed::Comment - a comment for a video (read/write) f
     };     
     
     #instantiate a comment
-    my $comment = new WebService::GData::YouTube($auth)->comment;
+    my $comment = WebService::GData::YouTube->new($auth)->comment;
 
        $comment->content('thank you all for watching!');
        $comment->video_id('2lDekeCDD-J1');#attach the comment to a video

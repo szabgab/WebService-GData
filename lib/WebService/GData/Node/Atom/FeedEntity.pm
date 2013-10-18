@@ -11,10 +11,10 @@ sub __init {
 	
 	$this->SUPER::__init($params);
 	
-    $this->_entity(new WebService::GData::Node::Atom::Feed('gd:etag'=>$this->{_feed}->{'gd$etag'}));
-    $this->{_logo}=new WebService::GData::Node::Atom::Logo($this->{_feed}->{logo});
+    $this->_entity(WebService::GData::Node::Atom::Feed->new('gd:etag'=>$this->{_feed}->{'gd$etag'}));
+    $this->{_logo} = WebService::GData::Node::Atom::Logo->new($this->{_feed}->{logo});
     $this->_entity->child($this->{_logo});
-    $this->{_generator}=new WebService::GData::Node::Atom::Generator($this->{_feed}->{generator});
+    $this->{_generator} = WebService::GData::Node::Atom::Generator->new($this->{_feed}->{generator});
     $this->_entity->child($this->{_generator});
     $this->set_children;
 }

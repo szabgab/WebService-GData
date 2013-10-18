@@ -10,10 +10,10 @@ sub __init {
     my ($this,$params) = @_;
 	
     $this->SUPER::__init($params);
-    $this->_entity(new WebService::GData::Node::Atom::Entry('gd:etag'=>$this->{_feed}->{'gd$etag'}));	
-    $this->{_content}= new WebService::GData::Node::Atom::Content($this->{_feed}->{content});
-    $this->{_summary}= new WebService::GData::Node::Atom::Summary($this->{_feed}->{summary});   
-    $this->{_published}= new WebService::GData::Node::Atom::Published($this->{_feed}->{published}); 
+    $this->_entity(WebService::GData::Node::Atom::Entry->new('gd:etag'=>$this->{_feed}->{'gd$etag'}));	
+    $this->{_content}= WebService::GData::Node::Atom::Content->new($this->{_feed}->{content});
+    $this->{_summary}= WebService::GData::Node::Atom::Summary->new($this->{_feed}->{summary});   
+    $this->{_published}= WebService::GData::Node::Atom::Published->new($this->{_feed}->{published}); 
     $this->_entity->child($this->{_published})->child($this->{_summary})->child($this->{_content});
     $this->set_children;
 
